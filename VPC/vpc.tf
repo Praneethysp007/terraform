@@ -10,21 +10,13 @@ resource "aws_vpc" "vpc1" {
   }
 }
 resource "aws_subnet" "web" {
+  count = 5
   vpc_id     = aws_vpc.vpc1.id
-  cidr_block = var.cidr_block
+  cidr_block = var.cidr_ranges[count.index]
 
 
   tags = {
-    Name = "subnet1"
-  }
-}
-resource "aws_subnet" "app" {
-  vpc_id     = aws_vpc.vpc1.id
-  cidr_block = var.cidr_block1
-
-
-  tags = {
-    Name = "subnet2"
+    Name = var.tags[count.index]
   }
 }
 
